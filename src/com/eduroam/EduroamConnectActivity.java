@@ -92,7 +92,7 @@ private WifiManager wifi;
 	    
 	    //user credentials and ssid
 	    String userName = "mesut.gurle@deu.edu.tr";
-	    String password = "w38qmcg";
+	    String password = "xxxx"; //password maked.
 	    String ssid = "eduroam";
 	    
 	    

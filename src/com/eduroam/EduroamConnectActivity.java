@@ -1,36 +1,25 @@
 package com.eduroam;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiConfiguration.AuthAlgorithm;
-import android.net.wifi.WifiConfiguration.GroupCipher;
-import android.net.wifi.WifiConfiguration.KeyMgmt;
-import android.net.wifi.WifiConfiguration.PairwiseCipher;
-import android.net.wifi.WifiConfiguration.Protocol;
+
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
+
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
 
 public class EduroamConnectActivity extends Activity implements OnClickListener{
 	
-   Button connect,disconnect;
+   Button connect,disconnect,parser;
 private WifiManager wifi;
     /** Called when the activity is first created. */
     @Override
@@ -44,6 +33,9 @@ private WifiManager wifi;
         
         disconnect=(Button) findViewById(R.id.btnDisconnect);
         disconnect.setOnClickListener(this);
+        
+        parser=(Button) findViewById(R.id.btnParser);
+        parser.setOnClickListener(this);
         
        
 	}
@@ -70,6 +62,10 @@ private WifiManager wifi;
 		}else if (v.getId() == R.id.btnDisconnect) {
 			clearEduroamConnection();
 			
+		}else if (v.getId() == R.id.btnParser) {
+			
+			Intent intentParser = new Intent(this,XmlParser.class);
+			startActivity(intentParser);
 		}
 		
 	}

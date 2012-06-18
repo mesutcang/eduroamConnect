@@ -21,5 +21,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Parse XML" />
+    
+    <Button
+        android:id="@+id/btnGetXml"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Get XML" />
 
 </LinearLayout>

@@ -1,25 +1,37 @@
 package com.eduroam;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.net.wifi.WifiConfiguration;
 
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class EduroamConnectActivity extends Activity implements OnClickListener{
 	
-   Button connect,disconnect,parser;
+   Button connect,disconnect,parser,getXml;
 private WifiManager wifi;
     /** Called when the activity is first created. */
     @Override
@@ -36,6 +48,9 @@ private WifiManager wifi;
         
         parser=(Button) findViewById(R.id.btnParser);
         parser.setOnClickListener(this);
+        
+        getXml=(Button) findViewById(R.id.btnGetXml);
+        getXml.setOnClickListener(this);
         
        
 	}
@@ -66,8 +81,54 @@ private WifiManager wifi;
 			
 			Intent intentParser = new Intent(this,XmlParser.class);
 			startActivity(intentParser);
+		}else if (v.getId() == R.id.btnGetXml) {
+			String url = "http://mesutcang.net23.net/dosya/wireless_profile.xml";
+			downloadFile(url);
 		}
 		
+	}
+	/*
+	 * Downloads specified file from url.
+	 */
+	private void downloadFile(String url) {
+		
+		 try {
+			URL u = new URL(url);
+
+			HttpURLConnection c = (HttpURLConnection) u.openConnection();
+			c.setRequestMethod("GET");
+			c.setDoOutput(true);
+			c.connect();
+			File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"wireless_profile.xml");
+			FileOutputStream f = new FileOutputStream(file);
+
+
+			InputStream in = c.getInputStream();
+
+			byte[] buffer = new byte[1024];
+			Integer len1 = 0;
+			while ( (len1 = in.read(buffer)) > 0 ) {
+				Log.d("downloading", len1.toString());
+		         f.write(buffer,0, len1);
+			}
+
+			Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+			
+			f.close();
+		} catch (MalformedURLException e) {
+			
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+						e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+
+	
 	}
 	/*
 	 * connectEduroam method configure security and user parametres and 

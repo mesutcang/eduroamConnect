@@ -12,7 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.http.HttpHost;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,13 +36,16 @@ import android.widget.Toast;
 
 public class EduroamConnectActivity extends Activity implements OnClickListener{
 	
-   Button connect,disconnect,parser,getXml;
+   Button connect,disconnect,parser,getXml,proxy,configure;
+   XmlParser xml;
 private WifiManager wifi;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+      
+        
         wifi = (WifiManager)getSystemService(WIFI_SERVICE); 
         
         connect=(Button) findViewById(R.id.btnConnect);
@@ -51,6 +59,12 @@ private WifiManager wifi;
         
         getXml=(Button) findViewById(R.id.btnGetXml);
         getXml.setOnClickListener(this);
+        
+        proxy=(Button) findViewById(R.id.btnSetProxy);
+        proxy.setOnClickListener(this);
+        
+        configure=(Button) findViewById(R.id.btnConfigure);
+        configure.setOnClickListener(this);
         
        
 	}
@@ -78,15 +92,112 @@ private WifiManager wifi;
 			clearEduroamConnection();
 			
 		}else if (v.getId() == R.id.btnParser) {
+			 xml = new XmlParser(getResources());
+			 //Toast.makeText(this,"EncryptionType "+xml.getConfigurationObject("PayloadContent.EncryptionType"), Toast.LENGTH_LONG).show();
 			
-			Intent intentParser = new Intent(this,XmlParser.class);
-			startActivity(intentParser);
+			 ArrayList<Object> item = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
+			 Toast.makeText(this, item.get(1).toString(), Toast.LENGTH_LONG).show();
+
 		}else if (v.getId() == R.id.btnGetXml) {
 			String url = "http://mesutcang.net23.net/dosya/wireless_profile.xml";
 			downloadFile(url);
+		}else if (v.getId() == R.id.btnConfigure) {
+			if (xml ==null) {
+				xml = new XmlParser(getResources());
+			}
+			configure();
+		}else if (v.getId() == R.id.btnSetProxy) {
+			String ip = "192.168.1.1";
+			Integer port = 3128;
+			setProxy(ip,port);
 		}
 		
 	}
+	private void configure() {
+		String conType = getConnectionType();
+		Toast.makeText(this,conType, Toast.LENGTH_LONG).show();
+		
+	}
+	private String getConnectionType() {
+		if (xml.getConfigurationObject("PayloadContent").toString().trim().equals("WPA")) {
+			
+		}
+		return null;
+	}
+	private void setProxy(String ip,Integer port) {
+		setProxyHostField(new HttpHost(ip, port));
+		
+	}
+	
+	
+	// Problem is setting proxy in android versions before 2.3 especially with HTC. 
+    private boolean setProxyHostField(HttpHost proxyServer) {
+    // Getting network      
+    Class networkClass = null;
+    Object network = null;
+    try {
+        networkClass = Class.forName("android.webkit.Network");
+        Field networkField = networkClass.getDeclaredField("sNetwork");
+        network = getFieldValueSafely(networkField, null);
+    } catch (Exception ex) {
+    	Toast.makeText(this, "error getting network", Toast.LENGTH_LONG).show();
+       
+        return false;
+    }
+    if (network == null) {
+    	Toast.makeText(this, "error getting network : null", Toast.LENGTH_LONG).show();
+       
+        return false;
+    }
+    Object requestQueue = null;
+    try {
+        Field requestQueueField = networkClass
+                .getDeclaredField("mRequestQueue");
+        requestQueue = getFieldValueSafely(requestQueueField, network);
+    } catch (Exception ex) {
+    	Toast.makeText(this, "error getting field value", Toast.LENGTH_LONG).show();
+        
+        return false;
+    }
+    if (requestQueue == null) {
+    	Toast.makeText(this, "Request queue is null", Toast.LENGTH_LONG).show();
+       
+        return false;
+    }
+    Field proxyHostField = null;
+    try {
+        Class requestQueueClass = Class.forName("android.net.http.RequestQueue");
+        proxyHostField = requestQueueClass
+                .getDeclaredField("mProxyHost");
+    } catch (Exception ex) {
+    	Toast.makeText(this, "error getting proxy host field", Toast.LENGTH_LONG).show();
+        
+        return false;
+    }       
+  
+        boolean temp = proxyHostField.isAccessible();
+        try {
+            proxyHostField.setAccessible(true);
+            proxyHostField.set(requestQueue, proxyServer);
+        } catch (Exception ex) {
+        	Toast.makeText(this, "error setting proxy host", Toast.LENGTH_LONG).show();
+            
+        } finally {
+            proxyHostField.setAccessible(temp);
+        }
+  
+    return true;
+}
+
+private Object getFieldValueSafely(Field field, Object classInstance) throws IllegalArgumentException, IllegalAccessException {
+    boolean oldAccessibleValue = field.isAccessible();
+    field.setAccessible(true);
+    Object result = field.get(classInstance);
+    field.setAccessible(oldAccessibleValue);
+    return result;      
+}
+
+	
 	/*
 	 * Downloads specified file from url.
 	 */

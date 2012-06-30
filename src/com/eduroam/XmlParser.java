@@ -3,6 +3,7 @@ package com.eduroam;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,30 +19,39 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class XmlParser extends Activity {
+public class XmlParser {
 	String xmlResource="wireless_profile";
 	private HashMap<String, Object> xmlConfiguration = new HashMap<String, Object>();
+	Resources applicationResources;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	
+	public XmlParser(Resources resources) {
+
+		//getResources().openRawResource(R.raw.wireless_profile)
+	
 		
-		super.onCreate(savedInstanceState);
-		 setContentView(R.layout.xmlparser);
 		
+		
+		
+		this.applicationResources = resources;
 		 if (checkFileExists()) {
 			 //	File exists. So we can parse it.
 			 
 			 parseXml();
 			
-			 Toast.makeText(this,"EAPFASTProvisionPAC "+getConfigurationObject("PayloadDisplayName"), Toast.LENGTH_LONG).show();
+			 
+			 
+			 
+			 //Toast.makeText(this,"EAPFASTProvisionPAC "+getConfigurationObject("PayloadDisplayName"), Toast.LENGTH_LONG).show();
 			 
 			
 		}else {
 			// File is not found. Exit.
-			finish();
+			return;
 		}
-			 
 	}
+	
+	
 
 	
 	
@@ -54,7 +64,7 @@ private void parseXml() {
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		XmlPullParser parser = factory.newPullParser();
 		
-	    parser.setInput(getResources().openRawResource(R.raw.wireless_profile), "utf-8");
+	    parser.setInput(applicationResources.openRawResource(R.raw.wireless_profile), "utf-8");
 
 	    int eventType = parser.getEventType();
 	    int arrayDepth = 0;
@@ -169,10 +179,10 @@ private void parseXml() {
 		 
 		try {
 			
-			xmlFile = getResources().getIdentifier(xmlResource,"raw",getPackageName());
+			xmlFile = applicationResources.getIdentifier(xmlResource,"raw",this.getClass().getPackage().getName());
 			
 			if (xmlFile == 0 ) {
-				 Toast.makeText(this,"Wireless configuration file cannot be found", Toast.LENGTH_LONG).show();
+				 //Toast.makeText(this,"Wireless configuration file cannot be found", Toast.LENGTH_LONG).show();
 				 return false;
 			}
 			
@@ -180,11 +190,11 @@ private void parseXml() {
 			
 		} catch (Resources.NotFoundException e) {
 			
-			 Toast.makeText(this,"Wireless configuration file cannot be found", Toast.LENGTH_LONG).show();
+			 //Toast.makeText(this,"Wireless configuration file cannot be found", Toast.LENGTH_LONG).show();
 			 return false;
 			
 		}catch (Exception e) {
-			 Toast.makeText(this,"Error occured!", Toast.LENGTH_LONG).show();
+			 //Toast.makeText(this,"Error occured!", Toast.LENGTH_LONG).show();
 			 return false;
 		}
 		

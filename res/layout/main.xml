@@ -23,9 +23,20 @@
         android:text="Parse XML" />
     
     <Button
+        android:id="@+id/btnConfigure"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Configure Parsed XML" />
+    
+    <Button
         android:id="@+id/btnGetXml"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Get XML" />
+    <Button
+        android:id="@+id/btnSetProxy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Proxy" />
 
 </LinearLayout>

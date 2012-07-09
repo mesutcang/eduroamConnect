@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpHost;
 import org.json.JSONObject;
@@ -36,8 +38,9 @@ import android.widget.Toast;
 
 public class EduroamConnectActivity extends Activity implements OnClickListener{
 	
-   Button connect,disconnect,parser,getXml,proxy,configure;
+   Button connect,disconnect,parser,getXml,proxy,configure,view;
    XmlParser xml;
+  
 private WifiManager wifi;
     /** Called when the activity is first created. */
     @Override
@@ -66,6 +69,9 @@ private WifiManager wifi;
         configure=(Button) findViewById(R.id.btnConfigure);
         configure.setOnClickListener(this);
         
+        view=(Button) findViewById(R.id.btnView);
+        view.setOnClickListener(this);
+        
        
 	}
 	public void onClick(View v) {
@@ -93,10 +99,9 @@ private WifiManager wifi;
 			
 		}else if (v.getId() == R.id.btnParser) {
 			 xml = new XmlParser(getResources());
-			 //Toast.makeText(this,"EncryptionType "+xml.getConfigurationObject("PayloadContent.EncryptionType"), Toast.LENGTH_LONG).show();
 			
-			 ArrayList<Object> item = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
-			 Toast.makeText(this, item.get(1).toString(), Toast.LENGTH_LONG).show();
+			
+			
 
 		}else if (v.getId() == R.id.btnGetXml) {
 			String url = "http://mesutcang.net23.net/dosya/wireless_profile.xml";
@@ -110,6 +115,25 @@ private WifiManager wifi;
 			String ip = "192.168.1.1";
 			Integer port = 3128;
 			setProxy(ip,port);
+		}else if (v.getId() == R.id.btnView) {
+			
+			 ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
+			 Toast.makeText(this, configuration.get(1).toString(), Toast.LENGTH_LONG).show();
+			 
+			 
+			 
+			 ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
+			 //Toast.makeText(this, parse.parseField(configuration.get(0).toString(), "EncryptionType"), Toast.LENGTH_LONG).show();
+			/*
+			 ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
+			 Toast.makeText(this, configuration.get(1).toString(), Toast.LENGTH_LONG).show();
+			 
+			 
+			ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
+			 
+			 Toast.makeText(this, parse.parseField(configuration.get(1).toString(), "EAPFASTProvisionPACAnonymously"), Toast.LENGTH_LONG).show();
+			 */
+			 
 		}
 		
 	}
@@ -119,6 +143,13 @@ private WifiManager wifi;
 		
 	}
 	private String getConnectionType() {
+		ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
+		 ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
+		 
+		 String connection = parse.parseField(configuration.get(0).toString(), "EncryptionType");
+		 
+		 
+		
 		if (xml.getConfigurationObject("PayloadContent").toString().trim().equals("WPA")) {
 			
 		}

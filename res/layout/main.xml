@@ -38,5 +38,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Set Proxy" />
+    
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="view" />
 
 </LinearLayout>

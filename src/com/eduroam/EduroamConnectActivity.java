@@ -40,6 +40,7 @@ public class EduroamConnectActivity extends Activity implements OnClickListener{
 	
    Button connect,disconnect,parser,getXml,proxy,configure,view;
    XmlParser xml;
+   ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
   
 private WifiManager wifi;
     /** Called when the activity is first created. */
@@ -117,22 +118,12 @@ private WifiManager wifi;
 			setProxy(ip,port);
 		}else if (v.getId() == R.id.btnView) {
 			
-			 ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
-			 Toast.makeText(this, configuration.get(1).toString(), Toast.LENGTH_LONG).show();
-			 
-			 
-			 
 			 ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
-			 //Toast.makeText(this, parse.parseField(configuration.get(0).toString(), "EncryptionType"), Toast.LENGTH_LONG).show();
-			/*
-			 ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
-			 Toast.makeText(this, configuration.get(1).toString(), Toast.LENGTH_LONG).show();
+			
+			 Toast.makeText(this, parse.getPayloadContentSSID_STR(xml).toString(), Toast.LENGTH_LONG).show();
 			 
 			 
-			ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
-			 
-			 Toast.makeText(this, parse.parseField(configuration.get(1).toString(), "EAPFASTProvisionPACAnonymously"), Toast.LENGTH_LONG).show();
-			 */
+
 			 
 		}
 		

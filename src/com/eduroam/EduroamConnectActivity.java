@@ -129,22 +129,17 @@ private WifiManager wifi;
 		
 	}
 	private void configure() {
-		String conType = getConnectionType();
-		Toast.makeText(this,conType, Toast.LENGTH_LONG).show();
+		ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
+		Options options = new Options();
 		
-	}
-	private String getConnectionType() {
-		ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
-		 ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
-		 
-		 String connection = parse.parseField(configuration.get(0).toString(), "EncryptionType");
-		 
-		 
+		String conType = parse.getEncryptionType(xml);
 		
-		if (xml.getConfigurationObject("PayloadContent").toString().trim().equals("WPA")) {
-			
-		}
-		return null;
+		String eapType = parse.getAcceptEAPTypes(xml);
+		
+		
+		
+		Toast.makeText(this,conType+"--"+eapType+"--"+options.getAcceptEAPTypeDefinition(eapType), Toast.LENGTH_LONG).show();
+		
 	}
 	private void setProxy(String ip,Integer port) {
 		setProxyHostField(new HttpHost(ip, port));

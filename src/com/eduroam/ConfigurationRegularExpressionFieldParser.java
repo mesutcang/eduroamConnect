@@ -300,6 +300,18 @@ public class ConfigurationRegularExpressionFieldParser {
 				
 	}
 	
+	public String getPayloadContentPassword(XmlParser xml) {
+		String field = null;
+		
+		 ArrayList<Object>  configuration = (ArrayList<Object>) xml.getConfigurationObject("PayloadContent");
+		 
+		field = this.parseField( configuration.get(0).toString(), "Password");
+		
+		 
+		return field; 
+				
+	}
+	
 	public String getPayloadContentSSID_STR(XmlParser xml) {
 		String field = null;
 		

@@ -22,6 +22,7 @@ import org.apache.http.HttpHost;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -113,21 +114,25 @@ private WifiManager wifi;
 			}
 			configure();
 		}else if (v.getId() == R.id.btnSetProxy) {
-			String ip = "192.168.1.1";
+			readConfiguration();
+			
+			/*String ip = "192.168.1.1";
 			Integer port = 3128;
-			setProxy(ip,port);
+			setProxy(ip,port);*/
 		}else if (v.getId() == R.id.btnView) {
+			connectWPA();
 			
-			 ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
+			/* ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
 			
-			 Toast.makeText(this, parse.getPayloadContentSSID_STR(xml).toString(), Toast.LENGTH_LONG).show();
-			 
+			 Toast.makeText(this, parse.getPayloadContentPassword(xml), Toast.LENGTH_LONG).show();
+			 */
 			 
 
 			 
 		}
 		
 	}
+	
 	private void configure() {
 		ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
 		Options options = new Options();
@@ -258,6 +263,57 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 
 	
 	}
+	
+	private void connectWPA(){
+		
+
+	     WifiManager wifi = (WifiManager)getSystemService(WIFI_SERVICE);
+	     WifiConfiguration wc = new WifiConfiguration(); 
+	     wc.SSID = "\"" + "free" + "\""; //IMP! This should be in Quotes!!
+	     wc.hiddenSSID = false;
+	     wc.status = WifiConfiguration.Status.ENABLED;     
+	     wc.priority = 40;
+	     wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+	     wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+
+	     wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+
+	     wc.preSharedKey = "\"" + "1qa2ws3edcxz" + "\"";// 
+
+	     Log.d("ssid : ", wc.SSID );
+
+	    
+	     
+	      int ret = wifi.addNetwork(wc);
+	        
+	        boolean a = wifi.enableNetwork(ret, false);   
+	        
+	        boolean b = wifi.saveConfiguration();
+	        
+	        boolean c = wifi.enableNetwork(ret, true);   
+
+	}
+	private void readConfiguration() {
+		
+	    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE); 
+	    List<WifiConfiguration> networks = wifi.getConfiguredNetworks();
+	    for (WifiConfiguration current : networks){
+	        if (current.SSID.equals("free")) {
+				Toast.makeText(this, current.SSID, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, String.valueOf(current.hiddenSSID), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, current.status, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, current.priority, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, String.valueOf(current.allowedKeyManagement), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, String.valueOf(current.allowedProtocols), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, String.valueOf(current.allowedAuthAlgorithms), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, current.preSharedKey, Toast.LENGTH_LONG).show();
+			}
+	    }
+	
+
+	
+}
+	
 	/*
 	 * connectEduroam method configure security and user parametres and 
 	 * establishes an eduroam connection. This method uses java reflection 

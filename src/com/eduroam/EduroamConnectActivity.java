@@ -155,39 +155,11 @@ private WifiManager wifi;
 			
 			
 
-			/*try {
-		     WifiManager wifi = (WifiManager)getSystemService(WIFI_SERVICE);
-		     WifiConfiguration wc = new WifiConfiguration(); 
-		     wc.SSID = "\"" + "free" + "\""; //IMP! This should be in Quotes!!
-		     wc.hiddenSSID = false;
-		     wc.status = WifiConfiguration.Status.ENABLED;     
-		     wc.priority = 40;
-		     wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-		     wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-
-		     wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-
-		     wc.preSharedKey = "\"" + "1qa2ws3edcxz" + "\"";// 
-
-		     Log.d("ssid : ", wc.SSID );
-
-		    
-		     
-		      int ret = wifi.addNetwork(wc);
-		        
-		        boolean a = wifi.enableNetwork(ret, false);   
-		        
-		        boolean b = wifi.saveConfiguration();
-		        
-		        boolean c = wifi.enableNetwork(ret, true);
-			}catch (Exception e) {
-					Toast.makeText(this, "hata:" + e.getMessage(), Toast.LENGTH_LONG).show();
-				}*/
-
+			
 			
 		}
 		
-		//Toast.makeText(this,conType+"--"+eapType+"--"+options.getAcceptEAPTypeDefinition(eapType), Toast.LENGTH_LONG).show();
+		
 		
 	}
 	private void setProxy(String ip,Integer port) {

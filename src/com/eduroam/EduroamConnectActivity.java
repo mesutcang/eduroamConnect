@@ -120,7 +120,7 @@ private WifiManager wifi;
 			Integer port = 3128;
 			setProxy(ip,port);*/
 		}else if (v.getId() == R.id.btnView) {
-			connectWPA();
+			//connectWPA();
 			
 			/* ConfigurationRegularExpressionFieldParser parse = new ConfigurationRegularExpressionFieldParser();
 			
@@ -139,11 +139,55 @@ private WifiManager wifi;
 		
 		String conType = parse.getEncryptionType(xml);
 		
-		String eapType = parse.getAcceptEAPTypes(xml);
+		//String eapType = parse.getAcceptEAPTypes(xml);
 		
+		if (conType.equalsIgnoreCase("WPA")) {
+			try {
+				String ssid = parse.getPayloadContentSSID_STR(xml);
+				String hiddenSSID = parse.getHiddenNetwork(xml);
+				String password = parse.getPayloadContentPassword(xml);
+				connectWPA(ssid, Boolean.valueOf(hiddenSSID), password);
+				
+				//Toast.makeText(this, password, Toast.LENGTH_LONG).show();
+			} catch (Exception e) {
+				Toast.makeText(this, "error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+			
+			
+
+			/*try {
+		     WifiManager wifi = (WifiManager)getSystemService(WIFI_SERVICE);
+		     WifiConfiguration wc = new WifiConfiguration(); 
+		     wc.SSID = "\"" + "free" + "\""; //IMP! This should be in Quotes!!
+		     wc.hiddenSSID = false;
+		     wc.status = WifiConfiguration.Status.ENABLED;     
+		     wc.priority = 40;
+		     wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+		     wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+
+		     wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+
+		     wc.preSharedKey = "\"" + "1qa2ws3edcxz" + "\"";// 
+
+		     Log.d("ssid : ", wc.SSID );
+
+		    
+		     
+		      int ret = wifi.addNetwork(wc);
+		        
+		        boolean a = wifi.enableNetwork(ret, false);   
+		        
+		        boolean b = wifi.saveConfiguration();
+		        
+		        boolean c = wifi.enableNetwork(ret, true);
+			}catch (Exception e) {
+					Toast.makeText(this, "hata:" + e.getMessage(), Toast.LENGTH_LONG).show();
+				}*/
+
+			
+		}
 		
-		
-		Toast.makeText(this,conType+"--"+eapType+"--"+options.getAcceptEAPTypeDefinition(eapType), Toast.LENGTH_LONG).show();
+		//Toast.makeText(this,conType+"--"+eapType+"--"+options.getAcceptEAPTypeDefinition(eapType), Toast.LENGTH_LONG).show();
 		
 	}
 	private void setProxy(String ip,Integer port) {
@@ -264,13 +308,14 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 	
 	}
 	
-	private void connectWPA(){
+	private void connectWPA(String ssid, Boolean hiddenSsid,String preSharedKey){
 		
-
+		
+		try {
 	     WifiManager wifi = (WifiManager)getSystemService(WIFI_SERVICE);
 	     WifiConfiguration wc = new WifiConfiguration(); 
-	     wc.SSID = "\"" + "free" + "\""; //IMP! This should be in Quotes!!
-	     wc.hiddenSSID = false;
+	     wc.SSID = "\"" + ssid + "\""; //IMP! This should be in Quotes!!
+	     wc.hiddenSSID = hiddenSsid;
 	     wc.status = WifiConfiguration.Status.ENABLED;     
 	     wc.priority = 40;
 	     wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
@@ -278,7 +323,7 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 
 	     wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
 
-	     wc.preSharedKey = "\"" + "1qa2ws3edcxz" + "\"";// 
+	     wc.preSharedKey = "\"" + preSharedKey + "\"";// 
 
 	     Log.d("ssid : ", wc.SSID );
 
@@ -290,25 +335,34 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 	        
 	        boolean b = wifi.saveConfiguration();
 	        
-	        boolean c = wifi.enableNetwork(ret, true);   
+	        boolean c = wifi.enableNetwork(ret, true);
+		}catch (Exception e) {
+				Toast.makeText(this, "error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
 
 	}
 	private void readConfiguration() {
+		try {
+			Toast.makeText(this, "geliyor", Toast.LENGTH_SHORT).show();
+		    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE); 
+		    List<WifiConfiguration> networks = wifi.getConfiguredNetworks();
+		    for (WifiConfiguration current : networks){
+		    	Toast.makeText(this, current.SSID, Toast.LENGTH_LONG).show();
+		        if (current.SSID.contains("free")) {
+					Toast.makeText(this, current.SSID, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, String.valueOf(current.hiddenSSID), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, current.status, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, current.priority, Toast.LENGTH_LONG).show();
+					Toast.makeText(this, String.valueOf(current.allowedKeyManagement), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, String.valueOf(current.allowedProtocols), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, String.valueOf(current.allowedAuthAlgorithms), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, current.preSharedKey, Toast.LENGTH_LONG).show();
+				}
+		    }
+		} catch (Exception e) {
+			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+		}
 		
-	    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE); 
-	    List<WifiConfiguration> networks = wifi.getConfiguredNetworks();
-	    for (WifiConfiguration current : networks){
-	        if (current.SSID.equals("free")) {
-				Toast.makeText(this, current.SSID, Toast.LENGTH_LONG).show();
-				Toast.makeText(this, String.valueOf(current.hiddenSSID), Toast.LENGTH_LONG).show();
-				Toast.makeText(this, current.status, Toast.LENGTH_LONG).show();
-				Toast.makeText(this, current.priority, Toast.LENGTH_LONG).show();
-				Toast.makeText(this, String.valueOf(current.allowedKeyManagement), Toast.LENGTH_LONG).show();
-				Toast.makeText(this, String.valueOf(current.allowedProtocols), Toast.LENGTH_LONG).show();
-				Toast.makeText(this, String.valueOf(current.allowedAuthAlgorithms), Toast.LENGTH_LONG).show();
-				Toast.makeText(this, current.preSharedKey, Toast.LENGTH_LONG).show();
-			}
-	    }
 	
 
 	

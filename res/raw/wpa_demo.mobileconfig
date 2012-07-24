@@ -16,7 +16,7 @@
 			<key>PayloadDescription</key>
 			<string>Configures wireless connectivity settings.</string>
 			<key>PayloadDisplayName</key>
-			<string>WiFi (wpa_demo)</string>
+			<string>WiFi (free)</string>
 			<key>PayloadIdentifier</key>
 			<string>org.packetfence.profile.wifi1</string>
 			<key>PayloadOrganization</key>
@@ -30,7 +30,7 @@
 			<key>ProxyType</key>
 			<string>None</string>
 			<key>SSID_STR</key>
-			<string>wpa_demo</string>
+			<string>free</string>
 		</dict>
 	</array>
 	<key>PayloadDescription</key>

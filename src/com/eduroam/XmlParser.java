@@ -64,7 +64,7 @@ private void parseXml() {
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		XmlPullParser parser = factory.newPullParser();
 		
-	    parser.setInput(applicationResources.openRawResource(R.raw.wpa_demo), "utf-8");
+	    parser.setInput(applicationResources.openRawResource(R.raw.wep_demo), "utf-8");
 
 	    int eventType = parser.getEventType();
 	    int arrayDepth = 0;

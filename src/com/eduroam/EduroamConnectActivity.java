@@ -153,10 +153,11 @@ private WifiManager wifi;
 				Toast.makeText(this, "error:" + e.getMessage(), Toast.LENGTH_LONG).show();
 			}
 			
-			
-
-			
-			
+		}else if (conType.equalsIgnoreCase("WEP")) {
+			String ssid = parse.getPayloadContentSSID_STR(xml);
+			String hiddenSSID = parse.getHiddenNetwork(xml);
+			String password = parse.getPayloadContentPassword(xml);
+			connectWEP(ssid, Boolean.valueOf(hiddenSSID), password);
 		}
 		
 		
@@ -313,6 +314,51 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 			}
 
 	}
+	
+	private void connectWEP(String ssid, Boolean hiddenSsid,String preSharedKey){
+		
+		
+		try {
+			
+		   
+			
+	     WifiManager wifi = (WifiManager)getSystemService(WIFI_SERVICE);
+	     WifiConfiguration wc = new WifiConfiguration(); 
+	     wc.SSID = "\"" + ssid + "\""; //IMP! This should be in Quotes!!
+	     wc.hiddenSSID = hiddenSsid;
+	     wc.status = WifiConfiguration.Status.ENABLED;     
+	     wc.priority = 40;
+	     wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+	     wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN); 
+  	    wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+  	    wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+  	    wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+  	    wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+  	    wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+  	    wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+  	    wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+         wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+
+	     wc.wepKeys[0] = "\"" + preSharedKey + "\"";// 
+	     wc.wepTxKeyIndex = 0;
+
+	     Log.d("ssid : ", wc.SSID );
+
+	    
+	     
+	      int ret = wifi.addNetwork(wc);
+	        
+	        boolean a = wifi.enableNetwork(ret, false);   
+	        
+	        boolean b = wifi.saveConfiguration();
+	        
+	        boolean c = wifi.enableNetwork(ret, true);
+		}catch (Exception e) {
+				Toast.makeText(this, "error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+
+	}
+	
 	private void readConfiguration() {
 		try {
 			Toast.makeText(this, "geliyor", Toast.LENGTH_SHORT).show();

@@ -12,11 +12,11 @@
 			<key>HIDDEN_NETWORK</key>
 			<false/>
 			<key>Password</key>
-			<string>1234567890</string>
+			<string>123456789012a</string>
 			<key>PayloadDescription</key>
 			<string>Configures wireless connectivity settings.</string>
 			<key>PayloadDisplayName</key>
-			<string>WiFi (wep_demo)</string>
+			<string>WiFi (free)</string>
 			<key>PayloadIdentifier</key>
 			<string>org.packetfence.profile.wifi1</string>
 			<key>PayloadOrganization</key>
@@ -30,7 +30,7 @@
 			<key>ProxyType</key>
 			<string>None</string>
 			<key>SSID_STR</key>
-			<string>wep_demo</string>
+			<string>free</string>
 		</dict>
 	</array>
 	<key>PayloadDescription</key>

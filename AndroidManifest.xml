@@ -13,13 +13,17 @@
        <activity
             android:name=".EduroamConnectActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+            
+        </activity>
+  <activity android:name=".ConnectionTab"></activity> 
+  <activity android:name=".Configurations"></activity> 
+       <activity android:name="Interface">
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
- <!-- <activity android:name=".XmlParser"></activity> -->        
+       </activity>        
     </application>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
     </uses-permission>

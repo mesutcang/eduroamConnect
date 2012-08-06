@@ -1,13 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="XmlParser Activity" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="center"
+        android:src="@drawable/packetfence"
+        android:layout_marginTop="10dp" />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="16dp"
+        android:singleLine="true"
+        android:width="150dp" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText1"
+        android:layout_alignBottom="@+id/editText1"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/editText1"
+        android:text="Username :"
+        android:width="100dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText1"
+        android:layout_toRightOf="@+id/textView1"
+        android:layout_marginTop="10dp"
+        android:inputType="textPassword"
+        android:width="150dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText2"
+        android:layout_alignBottom="@+id/editText2"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="Password :"
+        android:width="100dp" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/checkBox1"
+        android:layout_below="@+id/editText2"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:width="150dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginLeft="43dp"
+        android:text="Remember" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox1"
+        android:layout_alignRight="@+id/spinner1"
+        android:layout_below="@+id/checkBox1"
+        android:layout_marginTop="23dp"
+        android:text="Connect" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/spinner1"
+        android:layout_alignBottom="@+id/spinner1"
+        android:layout_alignLeft="@+id/textView2"
+        android:text="Configuration :"
+        android:width="100dp" />
+
+</RelativeLayout>
+

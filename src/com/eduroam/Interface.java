@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +27,27 @@ public class Interface extends TabActivity {
         myTabHost.setup();
         TabHazirla();
 	   
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		
+		MenuInflater inflater = new MenuInflater(this);
+	    inflater.inflate(R.menu.optionsmenu, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+
+@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case R.id.itemQuit:
+		finish();
+		break;
+
+	default:
+		break;
+	}
+		return super.onOptionsItemSelected(item);
 	}
 private void TabHazirla() {
 		

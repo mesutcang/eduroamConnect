@@ -113,7 +113,7 @@ private WifiManager wifi;
 
 		}else if (v.getId() == R.id.btnGetXml) {
 			String url = "http://mesutcang.net23.net/dosya/wireless_profile.xml";
-			downloadFile(url);
+//			downloadFile(url);
 		}else if (v.getId() == R.id.btnConfigure) {
 			if (xml ==null) {
 				xml = new XmlParser(getResources());
@@ -415,49 +415,7 @@ private Object getFieldValueSafely(Field field, Object classInstance) throws Ill
 }
 
 	
-	/*
-	 * Downloads specified file from url.
-	 */
-	private void downloadFile(String url) {
-		
-		 try {
-			URL u = new URL(url);
-
-			HttpURLConnection c = (HttpURLConnection) u.openConnection();
-			c.setRequestMethod("GET");
-			c.setDoOutput(true);
-			c.connect();
-			File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"wireless_profile.xml");
-			FileOutputStream f = new FileOutputStream(file);
-
-
-			InputStream in = c.getInputStream();
-
-			byte[] buffer = new byte[1024];
-			Integer len1 = 0;
-			while ( (len1 = in.read(buffer)) > 0 ) {
-				Log.d("downloading", len1.toString());
-		         f.write(buffer,0, len1);
-			}
-
-			Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-			
-			f.close();
-		} catch (MalformedURLException e) {
-			
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-						e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-
 	
-	}
 	
 	private void connectWPA(String ssid, Boolean hiddenSsid,String preSharedKey){
 		

@@ -3,6 +3,7 @@ package com.eduroam;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -14,6 +15,8 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -30,12 +33,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Configurations extends ListActivity implements OnClickListener{
-	Button btnDownload;
+public class Configurations extends Activity implements OnClickListener{
+	Button btnDownload,btnDelete,btnSDCard;
 	EditText input;
 	Options options = new Options();
 	ListView lvConfigurations;
 	String[] defaultValues = new String[] {  };
+	ArrayList<String> listeTurkcell;
 
 			// First paramenter - Context
 			// Second parameter - Layout for the row
@@ -93,15 +97,20 @@ public class Configurations extends ListActivity implements OnClickListener{
 		 setContentView(R.layout.configurations);
 		btnDownload = (Button) findViewById(R.id.btnDownload);
 		btnDownload.setOnClickListener(this);
-		lvConfigurations = (ListView) findViewById(R.id.listViewConfigurations);
+		btnDelete = (Button) findViewById(R.id.btnDelete);
+		btnDelete.setOnClickListener(this);
+		btnSDCard = (Button) findViewById(R.id.btnSDCard);
+		btnSDCard.setOnClickListener(this);
+		
+		lvConfigurations = (ListView) findViewById(R.id.list);
 		fillConfigurationListView();
 		
 	}
 	
 	private void fillConfigurationListView() {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				   R.id.listViewConfigurations, defaultValues);
-		ArrayList<String> listeTurkcell=new ArrayList<String>();
+				   R.id.list, defaultValues);
+		listeTurkcell=new ArrayList<String>();
 		lvConfigurations.setAdapter(adapter);
 		//Burada listeTurkcell değişkenine eklenen her veri listViewde görüntülenicek.
 		listeTurkcell.add("ListViewe Yazı Ekledim");
@@ -133,12 +142,44 @@ public class Configurations extends ListActivity implements OnClickListener{
 			});
 
 			alert.show();
+		}else if (v.getId() == R.id.btnDelete) {
+			File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
+			File[] files = f.listFiles();
+			for (File inFile : files) {
+			    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
+			}
+
+		}else if (v.getId() == R.id.btnSDCard) {
+			/*File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
+			if (dir.isDirectory()) {
+		        String[] children = dir.list();
+		        for (int i = 0; i < children.length; i++) {
+		            new File(dir, children[i]).delete();
+		        }
+		    }*/
+			
+			//pickFile();
+			listeTurkcell.add("ListViewe 2");
+			
+		
+
 		}
 		
 	}
 	
+	private void pickFile() {
+		mPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+		loadFileList();
+		Dialog a = onCreateDialog(DIALOG_LOAD_FILE);
+		a.show();
+		Toast.makeText(this, mPath.getAbsolutePath(), Toast.LENGTH_LONG).show();
+		
+		
+		
+	}
+
 	protected void checkEntry() {
-		String value = input.getText().toString();
+		String value = input.getText().toString().trim();
 		if (!value.trim().equals("")) {
 			if (!value.contains("http://")) {
 				value = "http://" + value;
@@ -165,15 +206,20 @@ public class Configurations extends ListActivity implements OnClickListener{
 	private void downloadFile(String url) {
 		
 		 try {
+			 String fileName= url.substring(url.lastIndexOf("/"));
+			 if (fileName.trim().equals("")) {
+				fileName = "index"+Math.random();
+			}
+			 
 			URL u = new URL(url);
 
 			HttpURLConnection c = (HttpURLConnection) u.openConnection();
 			c.setRequestMethod("GET");
 			c.setDoOutput(true);
 			c.connect();
-			Toast.makeText(this, Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(), Toast.LENGTH_LONG).show();
 			
-			File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),"wireless_profile.xml");
+			File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),fileName);
 			FileOutputStream f = new FileOutputStream(file);
 
 
@@ -186,7 +232,7 @@ public class Configurations extends ListActivity implements OnClickListener{
 		         f.write(buffer,0, len1);
 			}
 
-			Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, file.getAbsolutePath(), Toast.LENGTH_LONG).show();
 			
 			f.close();
 		} catch (MalformedURLException e) {
@@ -204,5 +250,62 @@ public class Configurations extends ListActivity implements OnClickListener{
 
 	
 	}
+	private String[] mFileList;
+	private File mPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+	private String mChosenFile="";
+	private static final String FTYPE = "";    
+	private static final int DIALOG_LOAD_FILE = 1000;
+	
+	
+
+	private void loadFileList(){
+	  
+	  if(mPath.exists()){
+	     FilenameFilter filter = new FilenameFilter(){
+	         public boolean accept(File dir, String filename){
+	            
+	             return true;
+	         }
+	     };
+	     mFileList = mPath.list(filter);
+	  }
+	  else{
+	    mFileList= new String[0];
+	  }
+	}
+
+	  protected Dialog onCreateDialog(int id){
+	  Dialog dialog = null;
+	  AlertDialog.Builder builder = new Builder(this);
+
+	  switch(id){
+	  case DIALOG_LOAD_FILE:
+	   builder.setTitle("Choose your file");
+	   if(mFileList == null){
+	     //Log.e(TAG, "Showing file picker before loading the file list");
+	     dialog = builder.create();
+	     return dialog;
+	   }
+	     builder.setItems(mFileList, new DialogInterface.OnClickListener(){
+	       public void onClick(DialogInterface dialog, int which){
+	          mChosenFile = mFileList[which];
+	          mPath = new File(mPath.getAbsolutePath()+File.separatorChar+mChosenFile);
+	  		if (mPath.isDirectory()) {
+	  			loadFileList();
+	  			Dialog a = onCreateDialog(DIALOG_LOAD_FILE);
+	  			a.show();
+			}
+	  			
+	  		
+	          
+	         
+	          //you can do stuff with the file here too
+	       }
+	      });
+	  break;
+	  }
+	  dialog = builder.show();
+	  return dialog;
+	 } 
 
 }

@@ -4,12 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <Gallery
-        android:id="@+id/gallery1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="19dp" />
 
     <Button
         android:id="@+id/btnDownload"
@@ -21,7 +15,7 @@
         android:text="Download From URL" />
 
     <ListView
-        android:id="@+id/listViewConfigurations"
+        android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:layout_alignParentLeft="true"
@@ -30,21 +24,21 @@
     </ListView>
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:text="Delete Configuration" />
-
-    <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnSDCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnDownload"
         android:layout_alignBottom="@+id/btnDownload"
         android:layout_alignParentRight="true"
         android:text="Select From SDCard" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Delete Configuration" />
 
 </RelativeLayout>

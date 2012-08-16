@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         android:scaleType="center"
-        android:src="@drawable/packetfence"
-        android:layout_marginTop="10dp" />
+        android:src="@drawable/packetfence" />
 
     <EditText
         android:id="@+id/editText1"
@@ -44,8 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
-        android:layout_toRightOf="@+id/textView1"
         android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/textView1"
         android:inputType="textPassword"
         android:width="150dp" />
 
@@ -59,44 +59,23 @@
         android:text="Password :"
         android:width="100dp" />
 
-    <Spinner
-        android:id="@+id/spinner1"
+    <Button
+        android:id="@+id/btnDownloadConfiguration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/checkBox1"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/textView1"
-        android:width="150dp" />
-
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/editText2"
         android:layout_alignRight="@+id/editText2"
-        android:layout_below="@+id/spinner1"
-        android:layout_marginLeft="43dp"
-        android:text="Remember" />
+        android:layout_centerVertical="true"
+        android:text="Download From URL" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnConnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_alignRight="@+id/spinner1"
-        android:layout_below="@+id/checkBox1"
-        android:layout_marginTop="23dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/btnDownloadConfiguration"
+        android:layout_marginBottom="58dp"
+        android:layout_toRightOf="@+id/textView2"
         android:text="Connect" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignTop="@+id/spinner1"
-        android:text="Configuration :"
-        android:width="100dp" />
-
 </RelativeLayout>
-

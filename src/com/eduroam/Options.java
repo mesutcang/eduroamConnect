@@ -10,6 +10,7 @@ import android.widget.Toast;
 public class Options {
 	Map<String,String> eapTypes ;
 	private String storageDirectory=".dot1x";
+	private String configurationURL="http://lan.packetfence.foo/autoconfig.xml";
 	public Options() {
 		File dir = new File(Environment.getExternalStorageDirectory() + File.separator + storageDirectory);
 		if(!dir.exists() || !dir.isDirectory()) {
@@ -51,6 +52,11 @@ public class Options {
 
 	public void setStorageDirectory(String storageDirectory) {
 		this.storageDirectory = storageDirectory;
+	}
+
+
+	public String getDefaultConfigurationURL() {
+		return this.configurationURL;
 	}
 	
 	

@@ -1,31 +1,100 @@
 package com.eduroam;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
-public class Interface extends TabActivity {
-
-	TabHost myTabHost;
-	/** Called when the activity is first created. */
+public class Interface extends Activity implements OnClickListener {
+	public static final Pattern WEB_URL_PATTERN
+    = Pattern.compile(
+        "((?:(http|https|Http|Https):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)"
+        + "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_"
+        + "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?"
+        + "((?:(?:[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}\\.)+"   // named host
+        + "(?:"   // plus top level domain
+        + "(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])"
+        + "|(?:biz|b[abdefghijmnorstvwyz])"
+        + "|(?:cat|com|coop|c[acdfghiklmnoruvxyz])"
+        + "|d[ejkmoz]"
+        + "|(?:edu|e[cegrstu])"
+        + "|f[ijkmor]"
+        + "|(?:gov|g[abdefghilmnpqrstuwy])"
+        + "|h[kmnrtu]"
+        + "|(?:info|int|i[delmnoqrst])"
+        + "|(?:jobs|j[emop])"
+        + "|k[eghimnrwyz]"
+        + "|l[abcikrstuvy]"
+        + "|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])"
+        + "|(?:name|net|n[acefgilopruz])"
+        + "|(?:org|om)"
+        + "|(?:pro|p[aefghklmnrstwy])"
+        + "|qa"
+        + "|r[eouw]"
+        + "|s[abcdeghijklmnortuvyz]"
+        + "|(?:tel|travel|t[cdfghjklmnoprtvwz])"
+        + "|u[agkmsyz]"
+        + "|v[aceginu]"
+        + "|w[fs]"
+        + "|y[etu]"
+        + "|z[amw]))"
+        + "|(?:(?:25[0-5]|2[0-4]" // or ip address
+        + "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]"
+        + "|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1]"
+        + "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}"
+        + "|[1-9][0-9]|[0-9])))"
+        + "(?:\\:\\d{1,5})?)" // plus option port number
+        + "(\\/(?:(?:[a-zA-Z0-9\\;\\/\\?\\:\\@\\&\\=\\#\\~"  // plus option query params
+        + "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?"
+        + "(?:\\b|$)"); // and finally, a word boundary or end of
+                        // input.  This is to stop foo.sure from
+                        // matching as foo.su
+	Options options = new Options();
+	Button btnDownloadConfiguration,btnConnect;
+	EditText input;
+	File file;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.tab);
-	    myTabHost = getTabHost();
-        myTabHost.setup();
-        TabHazirla();
+	    setContentView(R.layout.view);
+	 
+	    btnDownloadConfiguration = (Button) findViewById(R.id.btnDownloadConfiguration);
+	    btnDownloadConfiguration.setOnClickListener(this);
+	    
+	    btnConnect = (Button) findViewById(R.id.btnConnect);
+	    btnConnect.setOnClickListener(this);
+	    
+	    input=new EditText(this);
+	    input.setText(options.getDefaultConfigurationURL());
 	   
 	}
 	@Override
@@ -49,41 +118,125 @@ public class Interface extends TabActivity {
 	}
 		return super.onOptionsItemSelected(item);
 	}
-private void TabHazirla() {
+public void onClick(View v) {
+	if (v.getId() == R.id.btnDownloadConfiguration) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Download Configuration");
+		alert.setMessage("Please provide an URL that contains mobileconfig file.");
+
+		// Set an EditText view to get user input 
+		input = new EditText(this);
+		input.setText(options.getDefaultConfigurationURL());
 		
-		TabSpec tsAndroid = myTabHost.newTabSpec("and");
-		
-		//tsAndroid.setIndicator("Android",getResources().getDrawable(R.drawable.android));
-		
-		tsAndroid.setIndicator("Connection");
-		Intent intentAndroid = new Intent(this,ConnectionTab.class);
+		alert.setView(input);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  //
+		  checkEntry();
+		  }
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		    // Canceled.
+		  }
+		});
+
+		alert.show();
 	
+}else if (v.getId() == R.id.btnConnect) {
+	
+	/*
+	File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
+	if (dir.isDirectory()) {
+        String[] children = dir.list();
+        for (int i = 0; i < children.length; i++) {
+            new File(dir, children[i]).delete();
+        }
+    }
+	*/
+	
+	File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
+	File[] files = f.listFiles();
+	for (File inFile : files) {
+	    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
+	}
+
+}
+}
+
+	/*
+	 * Downloads specified file from url.
+	 */
+	private void downloadFile(String url) {
 		
-		tsAndroid.setContent(intentAndroid);
-		
-		myTabHost.addTab(tsAndroid);
-		
-		
-		TabSpec tsJava = myTabHost.newTabSpec("Configurations");
-		//tsJava.setIndicator("Java",getResources().getDrawable(R.drawable.java));
-		tsJava.setIndicator("Configurations");
-		
-		Intent intentJava = new Intent(this,Configurations.class);
-		
-		tsJava.setContent(intentJava);
-		
-		myTabHost.addTab(tsJava);
-		/*
-		TabSpec tsKariyer = myTabHost.newTabSpec("kariyer");
-		tsKariyer.setIndicator("Kariyer",getResources().getDrawable(R.drawable.kariyer));
-		
-		Intent intentKAriyer = new Intent(this,KariyerAct.class);
-		
-		tsKariyer.setContent(intentKAriyer);
-		
-		myTabHost.addTab(tsKariyer);
-		*/
+		 try {
+			 String fileName= url.substring(url.lastIndexOf("/"));
+			 if (fileName.trim().equals("")) {
+				fileName = "index"+Math.random();
+			}
+			 
+			URL u = new URL(url);
+
+			HttpURLConnection c = (HttpURLConnection) u.openConnection();
+			c.setRequestMethod("GET");
+			c.setDoOutput(true);
+			c.connect();
+			//Toast.makeText(this, Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(), Toast.LENGTH_LONG).show();
+			
+		    file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),fileName);
+			FileOutputStream f = new FileOutputStream(file);
+
+
+			InputStream in = c.getInputStream();
+
+			byte[] buffer = new byte[1024];
+			Integer len1 = 0;
+			while ( (len1 = in.read(buffer)) > 0 ) {
+				Log.d("downloading", len1.toString());
+		         f.write(buffer,0, len1);
+			}
+
+			Toast.makeText(this, "Configuration file is successfully downloaded.", Toast.LENGTH_LONG).show();
+			
+			f.close();
+		} catch (MalformedURLException e) {
+			
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+						e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+
+	
 	}
 	
-
+	protected void checkEntry() {
+		String value = input.getText().toString().trim();
+		if (!value.trim().equals("")) {
+			if (!value.contains("http://")) {
+				value = "http://" + value;
+				
+			}
+			
+			if (WEB_URL_PATTERN.matcher(value).matches() ) {
+				downloadFile(value);
+				
+			}else {
+				Toast.makeText(this, "Given URL is invalid.", Toast.LENGTH_LONG).show();
+			}
+			
+		}else {
+			Toast.makeText(this, "Value is empty.", Toast.LENGTH_LONG).show();
+		}
+		
+		
+	}
 }

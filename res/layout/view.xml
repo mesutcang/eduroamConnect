@@ -15,7 +15,7 @@
         android:src="@drawable/packetfence" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/etUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -29,53 +29,50 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/editText1"
-        android:text="Username :"
+        android:layout_below="@+id/etUsername"
+        android:layout_marginTop="37dp"
+        android:text="Password :"
         android:width="100dp" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/etUsername"
         android:inputType="textPassword"
         android:width="150dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText2"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignLeft="@+id/textView1"
-        android:text="Password :"
+        android:layout_alignBaseline="@+id/etUsername"
+        android:layout_alignBottom="@+id/etUsername"
+        android:layout_alignParentLeft="true"
+        android:text="Username :"
         android:width="100dp" />
 
     <Button
         android:id="@+id/btnDownloadConfiguration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/etPassword"
+        android:layout_below="@+id/etPassword"
+        android:layout_marginTop="50dp"
         android:text="Download From URL" />
 
     <Button
         android:id="@+id/btnConnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnDownloadConfiguration"
-        android:layout_marginBottom="58dp"
-        android:layout_toRightOf="@+id/textView2"
+        android:layout_below="@+id/btnDownloadConfiguration"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
         android:text="Connect" />
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.eduroam;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -85,7 +87,7 @@ public class Interface extends Activity implements OnClickListener {
                         // input.  This is to stop foo.sure from
                         // matching as foo.su
 	Options options = new Options();
-	Button btnDownloadConfiguration,btnConnect;
+	Button btnDownloadConfiguration,btnConnect,btn1;
 	EditText input,etUsername,etPassword;
 	File file;
 	
@@ -102,6 +104,9 @@ public class Interface extends Activity implements OnClickListener {
 	    
 	    btnConnect = (Button) findViewById(R.id.btnConnect);
 	    btnConnect.setOnClickListener(this);
+	    
+	    btn1 = (Button) findViewById(R.id.button1);
+	    btn1.setOnClickListener(this);
 	    
 	    input=new EditText(this);
 	    input.setText(options.getDefaultConfigurationURL());
@@ -171,14 +176,17 @@ public void onClick(View v) {
             new File(dir, children[i]).delete();
         }
     }
-	
+	*/
 	
 	File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
 	File[] files = f.listFiles();
 	for (File inFile : files) {
 	    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
 	}
-	*/
+	
+	
+	
+	
 	if (file== null || !file.isFile()) {
 		Toast.makeText(this, "Please define a valid configuration file.", Toast.LENGTH_LONG).show();
 		return;
@@ -186,14 +194,44 @@ public void onClick(View v) {
 		
 	}
 	
-	if (xml ==null) {
-		xml = new XmlParser(getResources());
+	String fileName = file.getName();
+	fileName = fileName.substring(0, fileName.lastIndexOf("."));
+	
+	InputStream is = null;
+	try {
+		is = new FileInputStream(file);
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
+	if (xml ==null) {
+		xml = new XmlParser(getResources(),"dot1x.mobileconfig",getResources().openRawResource(R.raw.dot1x));
+		//xml = new XmlParser(getResources(),fileName,is);
+	}
+	
+	
 	configure();
 	
 	
 	
 
+}else if (v.getId() == R.id.button1) {
+	
+	File f = this.getCacheDir();
+	File[] files = f.listFiles();
+	for (File inFile : files) {
+	    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
+	}
+	
+	
+
+	
+	
+	/*Intent i = new Intent();
+	i.setAction(android.content.Intent.ACTION_VIEW);
+	i.setData(Uri.fromFile(videoFile2Play));
+	//i.setDataAndType(Uri.fromFile(videoFile2Play), "text/xml");
+	startActivity(i);*/
 }
 }
 
@@ -422,9 +460,14 @@ public void onClick(View v) {
 			c.setRequestMethod("GET");
 			c.setDoOutput(true);
 			c.connect();
+			
+			
+		
+			
 			//Toast.makeText(this, Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(), Toast.LENGTH_LONG).show();
 			
-		    file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),fileName);
+		   // file = new File(path.getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),fileName);
+		 file = new File(this.getCacheDir().getAbsolutePath(),fileName);
 			FileOutputStream f = new FileOutputStream(file);
 
 
@@ -442,15 +485,15 @@ public void onClick(View v) {
 			f.close();
 		} catch (MalformedURLException e) {
 			
-			e.printStackTrace();
+			Toast.makeText(this, "error: " +e.getMessage(), Toast.LENGTH_LONG).show();	
 		} catch (ProtocolException e) {
-						e.printStackTrace();
+			Toast.makeText(this, "error: " +e.getMessage(), Toast.LENGTH_LONG).show();	
 		} catch (FileNotFoundException e) {
 			
-			e.printStackTrace();
+			Toast.makeText(this, "error: " +e.getMessage(), Toast.LENGTH_LONG).show();	
 		} catch (IOException e) {
 			
-			e.printStackTrace();
+			Toast.makeText(this, "error: " +e.getMessage(), Toast.LENGTH_LONG).show();	
 		}
 
 	

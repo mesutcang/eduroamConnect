@@ -1,0 +1,29 @@
+Application Usage:
+
+First of all install Android application to your mobile device. 
+Application can work with any Android device which supports 2.x 
+series of version. Application's source code repository can be 
+found on https://github.com/mesutcang/eduroamConnect. This 
+application is open source. You can contact mesutcang@gmail.com 
+for any questions or support for application. 
+
+Then you can open the application. If you opened application manually,
+you must provide a auto-configuration mobileconfig xml file url. You
+can use download button to download xml configuration file from a 
+user specified URL. This configuration file is the same as Apple's
+configuration utility. So you can use this application to auto-connect
+your any other network connection. Just prepare the xml configuration 
+file. When the application is installed the application registers 
+itself to open xml files default. So when you register an PacketFence
+network, it redirects you to the configuration file download page. 
+This configuration file is automatically opened with the application.
+If it doesn't, you can open manually your application and download the
+configuration file from the URL which is provided by PacketFence.
+
+You define a username and password if you want. If you don't define 
+a username and password, for WEP and WPA connections this fields aren't 
+used to connect a network. For a 802.1x network connection if you provide 
+a username and/or password it would be used to connect network. If you
+don't specify a username and/or password if xml configuration file contains
+and information about username and password fields, it would be used to
+connect network. 

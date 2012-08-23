@@ -17,17 +17,18 @@
         </activity>
   <activity android:name=".ConnectionTab"></activity> 
   <activity android:name=".Configurations"></activity> 
+  <activity android:name=".Preview"></activity> 
        <activity android:name="Interface">
            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <!-- to associate xml file extension with the application  -->
+                <!-- to associate xml file extension with the application 
                 <data android:scheme="file" />
         		<data android:mimeType="*/*" />
         		<data android:pathPattern=".*\\.xml" />
         		<data android:host="*" />
-                
+                 -->
                 
             </intent-filter>
        </activity>        

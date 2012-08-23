@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/settings" />
+
+    <TextView
+        android:id="@+id/tvConnectionName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginLeft="26dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="connection name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <TextView
+        android:id="@+id/tvOrganization"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvConnectionName"
+        android:layout_below="@+id/tvConnectionName"
+        android:text="organization" />
+
+    <Button
+        android:id="@+id/btnInstall"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_toRightOf="@+id/tvOrganization"
+        android:text="Install" />
+    <View 
+        	android:id="@+id/firstDivider"
+        	android:layout_height="1dp"
+        	android:layout_width="fill_parent"
+        	android:background="#d3d3d3"
+        	 android:layout_alignTop="@+id/imageView1"
+        	 android:layout_marginTop="85dp"
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imageView1"
+        android:layout_below="@+id/firstDivider"
+        android:layout_marginTop="27dp"
+        android:text="Description" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="27dp"
+        android:layout_toLeftOf="@+id/tvConnectionName"
+        android:text="Received" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="27dp"
+        android:layout_toLeftOf="@+id/tvConnectionName"
+        android:text="Contains" />
+    
+      <View 
+        	android:id="@+id/secondDivider"
+        	android:layout_height="1dp"
+        	android:layout_width="fill_parent"
+        	android:background="#d3d3d3"
+        	 android:layout_alignTop="@+id/textView4"
+        	 android:layout_marginTop="27dp"
+        />
+
+      <TextView
+          android:id="@+id/textView5"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/textView2"
+          android:layout_below="@+id/secondDivider"
+          android:layout_marginTop="14dp"
+          android:text="Details"
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+
+      <TextView
+          android:id="@+id/textView6"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/textView4"
+          android:layout_below="@+id/textView5"
+          android:layout_marginTop="27dp"
+          android:text="Network" />
+
+      <TextView
+          android:id="@+id/textView7"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/textView6"
+          android:layout_below="@+id/textView6"
+          android:layout_marginTop="27dp"
+          android:text="Encryption" />
+
+      <TextView
+          android:id="@+id/tvDescription"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/textView2"
+          android:layout_alignLeft="@+id/tvOrganization"
+          android:text="description" />
+
+      <TextView
+          android:id="@+id/tvReceived"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/textView3"
+          android:layout_alignLeft="@+id/tvDescription"
+          android:text="received" />
+
+      <TextView
+          android:id="@+id/tvContains"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/textView4"
+          android:layout_alignLeft="@+id/tvReceived"
+          android:text="contains" />
+
+      <TextView
+          android:id="@+id/tvNetwork"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/textView6"
+          android:layout_alignLeft="@+id/tvContains"
+          android:text="network" />
+
+      <TextView
+          android:id="@+id/tvEncryption"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBaseline="@+id/textView7"
+          android:layout_alignBottom="@+id/textView7"
+          android:layout_alignLeft="@+id/tvNetwork"
+          android:text="encryption" />
+
+</RelativeLayout>

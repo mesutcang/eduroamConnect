@@ -14,74 +14,22 @@
         android:scaleType="center"
         android:src="@drawable/packetfence" />
 
-    <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="16dp"
-        android:singleLine="true"
-        android:width="150dp" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etUsername"
-        android:layout_marginTop="37dp"
-        android:text="Password :"
-        android:width="100dp" />
-
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/etUsername"
-        android:inputType="textPassword"
-        android:width="150dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/etUsername"
-        android:layout_alignBottom="@+id/etUsername"
-        android:layout_alignParentLeft="true"
-        android:text="Username :"
-        android:width="100dp" />
-
     <Button
         android:id="@+id/btnDownloadConfiguration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/etPassword"
-        android:layout_below="@+id/etPassword"
-        android:layout_marginTop="50dp"
-        android:text="Download From URL" />
-
-    <Button
-        android:id="@+id/btnConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnDownloadConfiguration"
+        android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp"
-        android:text="Connect" />
+        android:layout_marginTop="80dp"
+        android:text="Download From URL" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignTop="@+id/btnDownloadConfiguration"
-        android:layout_marginTop="28dp"
-        android:text="Button" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Button"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int packetfence=0x7f020001;
+        public static final int settings=0x7f020002;
     }
     public static final class id {
         public static final int btnConfigure=0x7f070007;
@@ -20,30 +21,44 @@ public final class R {
         public static final int btnDelete=0x7f070003;
         public static final int btnDisconnect=0x7f070005;
         public static final int btnDownload=0x7f070000;
-        public static final int btnDownloadConfiguration=0x7f070011;
+        public static final int btnDownloadConfiguration=0x7f07001d;
         public static final int btnGetXml=0x7f070008;
+        public static final int btnInstall=0x7f07000e;
         public static final int btnParser=0x7f070006;
         public static final int btnSDCard=0x7f070002;
         public static final int btnSetProxy=0x7f070009;
         public static final int btnView=0x7f07000a;
-        public static final int button1=0x7f070012;
-        public static final int etPassword=0x7f07000f;
-        public static final int etUsername=0x7f07000d;
-        public static final int imageView1=0x7f07000c;
-        public static final int itemAbout=0x7f070015;
-        public static final int itemHelp=0x7f070014;
-        public static final int itemQuit=0x7f070013;
-        public static final int linearLayout1=0x7f07000b;
+        public static final int button1=0x7f07001e;
+        public static final int firstDivider=0x7f07000f;
+        public static final int imageView1=0x7f07000b;
+        public static final int itemAbout=0x7f070022;
+        public static final int itemHelp=0x7f070021;
+        public static final int itemQuit=0x7f070020;
+        public static final int linearLayout1=0x7f07001c;
         public static final int list=0x7f070001;
-        public static final int textView1=0x7f070010;
-        public static final int textView2=0x7f07000e;
+        public static final int secondDivider=0x7f070013;
+        public static final int textView1=0x7f07001f;
+        public static final int textView2=0x7f070010;
+        public static final int textView3=0x7f070011;
+        public static final int textView4=0x7f070012;
+        public static final int textView5=0x7f070014;
+        public static final int textView6=0x7f070015;
+        public static final int textView7=0x7f070016;
+        public static final int tvConnectionName=0x7f07000c;
+        public static final int tvContains=0x7f070019;
+        public static final int tvDescription=0x7f070017;
+        public static final int tvEncryption=0x7f07001b;
+        public static final int tvNetwork=0x7f07001a;
+        public static final int tvOrganization=0x7f07000d;
+        public static final int tvReceived=0x7f070018;
     }
     public static final class layout {
         public static final int configurations=0x7f030000;
         public static final int main=0x7f030001;
-        public static final int tab=0x7f030002;
-        public static final int view=0x7f030003;
-        public static final int xmlparser=0x7f030004;
+        public static final int preview=0x7f030002;
+        public static final int tab=0x7f030003;
+        public static final int view=0x7f030004;
+        public static final int xmlparser=0x7f030005;
     }
     public static final class menu {
         public static final int optionsmenu=0x7f060000;
@@ -51,7 +66,8 @@ public final class R {
     public static final class raw {
         public static final int dot1x=0x7f040000;
         public static final int wep_demo=0x7f040001;
-        public static final int wpa_demo=0x7f040002;
+        public static final int wireless_profile2=0x7f040002;
+        public static final int wpa_demo=0x7f040003;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

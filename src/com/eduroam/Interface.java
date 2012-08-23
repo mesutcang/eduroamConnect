@@ -176,7 +176,7 @@ public void onClick(View v) {
             new File(dir, children[i]).delete();
         }
     }
-	*/
+	
 	
 	File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+File.separatorChar+options.getStorageDirectory());
 	File[] files = f.listFiles();
@@ -184,7 +184,7 @@ public void onClick(View v) {
 	    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
 	}
 	
-	
+	*/
 	
 	
 	if (file== null || !file.isFile()) {
@@ -205,8 +205,8 @@ public void onClick(View v) {
 		e.printStackTrace();
 	}
 	if (xml ==null) {
-		xml = new XmlParser(getResources(),"dot1x.mobileconfig",getResources().openRawResource(R.raw.dot1x));
-		//xml = new XmlParser(getResources(),fileName,is);
+		//xml = new XmlParser(getResources(),"dot1x.mobileconfig",getResources().openRawResource(R.raw.dot1x));
+		xml = new XmlParser(getResources(),fileName,is);
 	}
 	
 	
@@ -217,11 +217,15 @@ public void onClick(View v) {
 
 }else if (v.getId() == R.id.button1) {
 	
+
+	file = new File(this.getCacheDir()+"/wireless_profile.xml");
+	/*
 	File f = this.getCacheDir();
 	File[] files = f.listFiles();
 	for (File inFile : files) {
 	    Toast.makeText(this, inFile.getName(), Toast.LENGTH_LONG).show();
 	}
+	*/
 	
 	
 
@@ -468,7 +472,7 @@ public void onClick(View v) {
 			
 		   // file = new File(path.getAbsolutePath()+File.separatorChar+options.getStorageDirectory(),fileName);
 		 file = new File(this.getCacheDir().getAbsolutePath(),fileName);
-			FileOutputStream f = new FileOutputStream(file);
+			FileOutputStream f = new FileOutputStream(file,false);
 
 
 			InputStream in = c.getInputStream();

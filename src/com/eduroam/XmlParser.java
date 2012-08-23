@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class XmlParser {
 	String xmlResource="wireless_profile";
-	InputStream input;
+	InputStream input=null;
 	private HashMap<String, Object> xmlConfiguration = new HashMap<String, Object>();
 	Resources applicationResources;
 	
@@ -171,17 +171,17 @@ private void parseXml() {
 
 
 
-
+/*
 	private boolean checkFileExists() {
 		
 		int xmlFile = 0; 
 		/*
 		 *	This try/catch block checks if wireless configuration profile is exists. 
-		 */
+		 
 		 
 		try {
 			
-			xmlFile = applicationResources.getIdentifier(xmlResource,"raw",this.getClass().getPackage().getName());
+			//xmlFile = applicationResources.getIdentifier(xmlResource,"raw",this.getClass().getPackage().getName());
 			
 			if (xmlFile == 0 ) {
 				 //Toast.makeText(this,"Wireless configuration file cannot be found", Toast.LENGTH_LONG).show();
@@ -207,8 +207,21 @@ private void parseXml() {
 		
 		return true;
 	}
+	*/
+	
+private boolean checkFileExists() {
+	
+	 
+		if (input ==null) {
+			return false;
+		}else {
+			return true;
+		}
+
 	
 	
+	
+}
 	
 	protected Object getConfigurationObject(String keyName) {
 		

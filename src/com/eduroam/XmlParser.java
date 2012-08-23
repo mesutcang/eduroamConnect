@@ -21,16 +21,18 @@ import android.widget.Toast;
 
 public class XmlParser {
 	String xmlResource="wireless_profile";
+	InputStream input;
 	private HashMap<String, Object> xmlConfiguration = new HashMap<String, Object>();
 	Resources applicationResources;
 	
 	
-	public XmlParser(Resources resources) {
+	public XmlParser(Resources resources,String xml_resource,InputStream inputStream) {
 
 		//getResources().openRawResource(R.raw.wireless_profile)
 	
 		
-		
+		this.xmlResource = xml_resource;
+		this.input = inputStream;
 		
 		
 		this.applicationResources = resources;
@@ -64,7 +66,7 @@ private void parseXml() {
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 		XmlPullParser parser = factory.newPullParser();
 		
-	    parser.setInput(applicationResources.openRawResource(R.raw.dot1x), "utf-8");
+	    parser.setInput(input, "utf-8");
 
 	    int eventType = parser.getEventType();
 	    int arrayDepth = 0;

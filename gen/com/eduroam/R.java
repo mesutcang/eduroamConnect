@@ -26,12 +26,13 @@ public final class R {
         public static final int btnSDCard=0x7f070002;
         public static final int btnSetProxy=0x7f070009;
         public static final int btnView=0x7f07000a;
+        public static final int button1=0x7f070012;
         public static final int etPassword=0x7f07000f;
         public static final int etUsername=0x7f07000d;
         public static final int imageView1=0x7f07000c;
-        public static final int itemAbout=0x7f070014;
-        public static final int itemHelp=0x7f070013;
-        public static final int itemQuit=0x7f070012;
+        public static final int itemAbout=0x7f070015;
+        public static final int itemHelp=0x7f070014;
+        public static final int itemQuit=0x7f070013;
         public static final int linearLayout1=0x7f07000b;
         public static final int list=0x7f070001;
         public static final int textView1=0x7f070010;

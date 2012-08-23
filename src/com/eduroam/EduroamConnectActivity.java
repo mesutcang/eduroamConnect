@@ -106,7 +106,7 @@ private WifiManager wifi;
 			clearEduroamConnection();
 			
 		}else if (v.getId() == R.id.btnParser) {
-			 xml = new XmlParser(getResources());
+			 xml = new XmlParser(getResources(),"wireless_profile",getResources().openRawResource(R.raw.dot1x));
 			
 			
 			
@@ -116,7 +116,7 @@ private WifiManager wifi;
 //			downloadFile(url);
 		}else if (v.getId() == R.id.btnConfigure) {
 			if (xml ==null) {
-				xml = new XmlParser(getResources());
+				xml = new XmlParser(getResources(),"wireless_profile",getResources().openRawResource(R.raw.dot1x));
 			}
 			configure();
 		}else if (v.getId() == R.id.btnSetProxy) {

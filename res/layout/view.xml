@@ -75,4 +75,13 @@
         android:layout_marginTop="74dp"
         android:text="Connect" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignTop="@+id/btnDownloadConfiguration"
+        android:layout_marginTop="28dp"
+        android:text="Button" />
+
 </RelativeLayout>
